@@ -1,0 +1,69 @@
+---
+- name: Deploy Flask BMI Calculator on Fedora
+  hosts: servers
+  remote_user: root
+
+  vars:
+    app_name: bmi_calculator
+    app_dir: /opt/bmi_calculator
+    venv_dir: /opt/bmi_calculator/venv
+    flask_app_file: app.py
+    flask_app_port: 8000
+
+  tasks:
+    - name: Ensure Python3 and pip are installed
+      dnf:
+        name:
+          - python3
+          - python3-pip
+          - python3-virtualenv
+          - git
+        state: present
+
+    - name: Create application directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+
+    - name: Create virtual environment
+      command: python3 -m venv "{{ venv_dir }}"
+      args:
+        creates: "{{ venv_dir }}/bin/activate"
+
+    - name: Install Flask in virtual environment
+      command: "{{ venv_dir }}/bin/pip install flask"
+
+    - name: Deploy Flask application files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ app_dir }}/{{ item.dest }}"
+      with_items:
+        - { src: 'app.py', dest: 'app.py' }
+        - { src: 'templates/index.html', dest: 'templates/index.html' }
+        - { src: 'templates/result.html', dest: 'templates/result.html' }
+
+    - name: Create systemd service file for Flask app
+      copy:
+        dest: /etc/systemd/system/{{ app_name }}.service
+        content: |
+          [Unit]
+          Description=Flask BMI Calculator
+          After=network.target
+
+          [Service]
+          User=root
+          WorkingDirectory={{ app_dir }}
+          ExecStart={{ venv_dir }}/bin/python {{ app_dir }}/{{ flask_app_file }}
+          Restart=always
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd to apply new service
+      command: systemctl daemon-reload
+
+    - name: Enable and start Flask app service
+      systemd:
+        name: "{{ app_name }}"
+        state: started
+        enabled: yes
