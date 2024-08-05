@@ -5,8 +5,8 @@
 
   vars:
     app_name: bmi_calculator
-    app_dir: /opt/bmi_calculator
-    venv_dir: /opt/bmi_calculator/venv
+    app_dir: /home/student/bmi_calculator
+    venv_dir: /home/student/bmi_calculator/venv
     flask_app_file: app.py
     flask_app_port: 8000
 
