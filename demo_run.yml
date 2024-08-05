@@ -33,28 +33,6 @@
         - { src: 'templates/index.html', dest: 'templates/index.html' }
         - { src: 'templates/result.html', dest: 'templates/result.html' }
 
-    - name: Create systemd service file for Flask app
-      copy:
-        dest: /etc/systemd/system/{{ app_name }}.service
-        content: |
-          [Unit]
-          Description=Flask BMI Calculator
-          After=network.target
-
-          [Service]
-          User=root
-          WorkingDirectory={{ app_dir }}
-          ExecStart={{ venv_dir }}/bin/python {{ app_dir }}/{{ flask_app_file }}
-          Restart=always
-
-          [Install]
-          WantedBy=multi-user.target
-
-    - name: Reload systemd to apply new service
-      command: systemctl daemon-reload
-
-    - name: Enable and start Flask app service
-      systemd:
-        name: "{{ app_name }}"
-        state: started
-        enabled: yes
+    - name: Run Flask application
+      shell:
+        nohup python {{ app_dir }}/app.py &
