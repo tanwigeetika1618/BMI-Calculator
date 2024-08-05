@@ -7,28 +7,31 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f5f5f5;
+background: linear-gradient(90deg, rgba(43,21,58,1) 0%, rgba(99,51,145,1) 50%, rgba(7,148,177,1) 100%);
             font-family: Arial, sans-serif;
         }
         .container {
             max-width: 500px;
             margin-top: 100px;
             padding: 20px;
-            background: #fff;
+            background: #1E1E1E;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            color: #673AB7;
         }
         .btn-primary {
             width: 100%;
+            background-color: #00BCD4;
         }
         .result {
             text-align: center;
             font-size: 1.5em;
             margin-bottom: 20px;
+            color: #E0E0E0;
         }
     </style>
 </head>
@@ -36,7 +39,7 @@
     <div class="container">
         <h1>Your BMI</h1>
         <div class="result">
-            Your BMI is: {{ bmi }}
+            Your BMI is: <span id='bmi'>{{ bmi }}</span>
         </div>
         <a href="/" class="btn btn-primary">Go Back</a>
     </div>

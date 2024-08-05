@@ -7,23 +7,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(90deg, rgba(43,21,58,1) 0%, rgba(99,51,145,1) 50%, rgba(7,148,177,1) 100%);
             font-family: Arial, sans-serif;
         }
         .container {
             max-width: 500px;
             margin-top: 100px;
             padding: 20px;
-            background: #fff;
+            background: #1E1E1E;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
         h1 {
-            text-align: center;
+            text-align: center ;
             margin-bottom: 20px;
+            color: #673AB7
         }
         .btn-primary {
             width: 100%;
+            background-color: #00BCD4;
+        }
+        label{
+            color: #E0E0E0
         }
     </style>
 </head>
@@ -33,11 +38,11 @@
         <form action="/calculate" method="post">
             <div class="form-group">
                 <label for="height">Height (in cm):</label>
-                <input type="number" class="form-control" id="height" name="height" step="0.1" required>
+                <input type="number" class="form-control" id="height" name="height" step="0.1"  min="0" required>
             </div>
             <div class="form-group">
                 <label for="weight">Weight (in kg):</label>
-                <input type="number" class="form-control" id="weight" name="weight" step="0.1" required>
+                <input type="number" class="form-control" id="weight" name="weight" step="0.1"  min="0" required>
             </div>
             <button type="submit" class="btn btn-primary">Calculate BMI</button>
         </form>
