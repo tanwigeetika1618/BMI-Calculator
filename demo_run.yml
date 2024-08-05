@@ -11,15 +11,6 @@
     flask_app_port: 8000
 
   tasks:
-    - name: Ensure Python3 and pip are installed
-      dnf:
-        name:
-          - python3
-          - python3-pip
-          - python3-virtualenv
-          - git
-        state: present
-
     - name: Create application directory
       file:
         path: "{{ app_dir }}"
